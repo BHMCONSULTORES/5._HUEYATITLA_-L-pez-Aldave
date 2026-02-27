@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador documentos</title>
+    <style>
+        /* Estilos generales para una apariencia limpia */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Gibson", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 15px;
+        }
+
+        /* Estilo para el campo de búsqueda */
+        #filtro-tabla {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+        }
+
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        th, td, li, details, summary, ul {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Estilo para el encabezado de la tabla */
+        thead th {
+            background-color: #334682; /* Un color similar al de Esri */
+            color: white;
+            position: sticky; /* Encabezado fijo */
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="filtro-tabla" onkeyup="filtrar()" placeholder="Buscar documentos en Predio 5 HUEYATITLA López Aldave...">
+
+    <table id="mi-tabla">
+        <thead>
+            <tr>
+                <th>Documento</th>
+                <th>Enlace</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Acreditación de propiedad</td><td><a href="https://drive.google.com/file/d/1JIQyW5-TsYYpFLxQnGuUdhvst_KrlnVz/view?usp=drive_link" Target="_blank">Predio 5_ Escritura de compra - venta y fusión</a></td></tr>
+            <tr><td>Acreditación de propiedad</td><td><a href="https://drive.google.com/file/d/1b8Z9M_KNDWVlw8ACEUa64dmuHdnYWFTb/view?usp=drive_link" Target="_blank">Predio 5_ Certificado inscripción libertad de gravamen historial registral</a></td></tr>
+            <tr><td>Acreditación de propiedad</td><td><a href="https://drive.google.com/file/d/1HfyO2DaVCz4Fd6ualLqLCkG_0X9qAVHa/view?usp=drive_link" Target="_blank">Predio 5_ Certificado de libertad de gravamen - Máximo</a></td></tr>
+            <tr><td>Contrato Igasamex</td><td><a href="https://drive.google.com/file/d/1-6O6eX02N7IlTQpq7E9qOdybQOBXcK84/view?usp=drive_link" Target="_blank">Predio 5_ Escritura de compra - venta - Georgina - Igasamex</a></td></tr>
+			<tr><td>Informe final</td><td><a href="https://drive.google.com/file/d/1UxUTEseDc7xH2ML8hELJ07SwzGyqxqQb/view?usp=drive_link" Target="_blank">Maximo Huerta informe final</a></td></tr>
+        </tbody>
+    </table>
+	<details>
+		<summary>📁 Permisos y Licencias</summary>
+			<ul><a href="https://drive.google.com/file/d/1FLCptHk9qmdeVsgl6fp6ih-gLJGaIZ90/view?usp=drive_link" 
+					Target="_blank">Derecho de vía_Información fundamento derecho de vía</a></ul>
+			<ul><a href="https://drive.google.com/file/d/1uuSD-ND6jf_ImHtiKR8Owv9KYgPcHGbh/view?usp=drive_link" 
+					Target="_blank">Permisos - Permiso de construcción ramal de gas</a></ul>
+			<ul><a href="https://drive.google.com/file/d/1qh4YbJmySRjcEnN5lsLCiv1Ls_WY32AQ/view?usp=drive_link" 
+					Target="_blank">Permisos - Permiso de cruzamiento de carretera</a></ul>
+			<ul><a href="https://drive.google.com/file/d/1PRZd6riMe073lXuKt_QLhJG2Sk-O_un2/view?usp=drive_link" 
+					Target="_blank">Permisos - Construcción cruzamiento de carrtera</a></ul>
+			<ul><a href="https://drive.google.com/file/d/1TkgSQ4arkoKmsjiqkvEvn91a4bawNnQA/view?usp=drive_link" 
+					Target="_blank">Visto bueno - ambiental</a></ul>
+	</details>
+<script>
+ function filtrar() {
+            // 1. Obtener los elementos del DOM
+            const input = document.getElementById("filtro-tabla");
+            const filtro = input.value.toUpperCase(); // Convertir a mayúsculas para no distinguir
+            const tabla = document.getElementById("mi-tabla");
+            const filas = tabla.getElementsByTagName("tr");
+
+            // 2. Recorrer todas las filas de la tabla (empezando en 1 para omitir el encabezado)
+            for (let i = 1; i < filas.length; i++) {
+                let celdas = filas[i].getElementsByTagName("td");
+                let coincidencia = false; // Bandera para saber si se encontró en alguna celda de la fila
+
+                // 3. Recorrer todas las celdas de la fila actual
+                for (let j = 0; j < celdas.length; j++) {
+                    if (celdas[j]) {
+                        let textoCelda = celdas[j].textContent || celdas[j].innerText;
+                        // 4. Si el texto de CUALQUIER celda coincide, marca la bandera y detiene la búsqueda en esta fila
+                        if (textoCelda.toUpperCase().indexOf(filtro) > -1) {
+                            coincidencia = true;
+                            break; // Detiene el bucle de celdas, ya encontramos una coincidencia
+                        }
+                    }
+                }
+
+                // 5. Muestra u oculta la fila basado en si se encontró una coincidencia
+                if (coincidencia) {
+                    filas[i].style.display = "";
+                } else {
+                    filas[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
